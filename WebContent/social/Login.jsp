@@ -109,22 +109,39 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 									</ul>
 								</li>
 								<li class="dropdown">
-									<a href="jobs.html" class="dropdown-toggle effect-3" data-toggle="dropdown">Departments<b class="caret"></b></a>
+									<a href="jobs.html" class="dropdown-toggle effect-3" data-toggle="dropdown">Jobs<b class="caret"></b></a>
 									<ul class="dropdown-menu multi-column columns-2">
 										<div class="row">
 											<div class="col-sm-6">
 												<ul class="multi-column-dropdown">
-													<li><a href="jobs.html">Students</a></li>
-													<li><a href="jobs.html">Agriculture</a></li>
-													<li><a href="jobs.html">Women And Child</a></li>											
+													<li><a href="jobs.html">Walk-ins</a></li>
+													<li><a href="jobs.html">Bpo Jobs</a></li>
+													<li><a href="jobs.html">Teaching Jobs</a></li>
+													<li><a href="jobs.html">Diploma Jobs</a></li>
+													<li><a href="jobs.html">Tech Support</a></li>
+													<li><a href="jobs.html">Finance Jobs</a></li>
+													<li><a href="jobs.html">Part time Jobs</a></li>
+													<li><a href="jobs.html">Health Care</a></li>
+													<li><a href="jobs.html">Hospitality</a></li>
+													<li><a href="jobs.html">Internships</a></li>
+													<li><a href="jobs.html">Research Jobs</a></li>
+													<li><a href="jobs.html">Defence Jobs</a></li>
+												</ul>
+											</div>
+											<div class="col-sm-6">
+												<ul class="multi-column-dropdown">
+													<li><a href="login.html">Recruiter Updates</a></li>
+													<li><a href="upload.html">Upload Resume</a></li>
+													<li><a href="codes.html">Shortcodes</a></li>
+												</ul>
 											</div>
 										</div>
 									</ul>
 								</li>
-								<li><a href="" class="effect-3">1</a></li>
+								<li><a href="events.html" class="effect-3">Events</a></li>
 
-								<li><a href="" class="effect-3">2</a></li>
-								<li><a href="" class="effect-3">Contact</a></li>
+								<li><a href="professional.html" class="effect-3">Profesionals</a></li>
+								<li><a href="contact.html" class="effect-3">Contact</a></li>
 							</ul>
 						</nav>
 					</div>
@@ -137,12 +154,20 @@ ga('create', 'UA-30027142-1', 'w3layouts.com');
 	<!-- banner -->
 	<div class="inner_page_agile">
 		<h3>Login</h3>
-		<p>Know Your Scholarships</p>
+		<p>Add Some Short Description</p>
 
 	</div>
 	<!--//banner -->
 	<!--/w3_short-->
-	
+	<div class="services-breadcrumb_w3layouts">
+		<div class="inner_breadcrumb">
+
+			<ul class="short_w3ls"_w3ls>
+				<li><a href="index.html">Home</a><span>|</span></li>
+				<li>Login</li>
+			</ul>
+		</div>
+	</div>
 	<!--//w3_short-->
 	<!-- /inner_content -->
 	<div class="inner_content_info_agileits">
@@ -214,7 +239,7 @@ user_tag_config['ebound_header_tag']['mobile']['adsCode'] = '';
 							<li><a href="#"><i class="fa fa-rss"></i></a></li>
 						</ul>
 					</div>
-					<p><a href="Registration.jsp"> Don't have an account?</a></p>
+					<p><a href="register.html"> Don't have an account?</a></p>
 				</div>
 			</div>
 			<!---728x90--->
@@ -342,31 +367,52 @@ user_tag_config['ebound_header_tag']['mobile']['adsCode'] = '';
 			//empty string means no validation error
 		}
 	</script>
-	<%
-String email=request.getParameter("email");
-String pass=request.getParameter("pass");
-String cpass=request.getParameter("cpass");
-
-try
-{
-	Class.forName("com.mysql.jdbc.Driver");
-	Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/myproject","root","");
-	Statement stmt=con.createStatement();
-	String sql = "SELECT * FROM registration where email = '"+email+"' AND password='"+pass+"' AND role='"+"USER"+"'";
-	ResultSet rs = stmt.executeQuery(sql);
-	while(rs.next()){
-        //Retrieve by column name
-        
-       
-	}      
-}
-catch(Exception e)
-{
-	System.out.println(e);
-}
-	
-	%>
 	<!-- //password-script -->
+	<%
+		String em=request.getParameter("email");
+		String pass=request.getParameter("password");
+		String rol=null;
+
+
+	try
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/myproject","root","");
+		Statement stmt=con.createStatement();
+		String sql = "SELECT role FROM registration where email = '"+em+"' AND password='"+pass+"'";
+		ResultSet rs = stmt.executeQuery(sql);
+		while(rs.next())
+		{
+	        //Retrieve by column name
+	        rol=rs.getString("role");
+
+	        if(rol.equals("USER"))
+			{
+				response.sendRedirect("UserHome.jsp");
+				System.out.println(rol);
+			}
+			if(rol.equals("ADMIN"))
+			{
+				response.sendRedirect("AdminHome.jsp");
+				System.out.println(rol);
+			}
+			if(rol.equals("SUPERADMIN"))
+			{
+				response.sendRedirect("SuperAdminHome.jsp");
+				System.out.println(rol);
+			}
+				
+		}
+
+	}  
+		
+	catch(Exception e)
+	{
+		System.out.println(e);
+	}
+	
+
+%>
 	<script type="text/javascript" src="js/bootstrap.js"></script>
 </body>
 
